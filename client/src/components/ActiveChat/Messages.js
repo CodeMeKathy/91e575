@@ -5,16 +5,23 @@ import moment from "moment";
 
 const Messages = (props) => {
   const { messages, otherUser, userId } = props;
+  let sortedMessages = messages.sort((a, b) => {
+    return moment(a.createdAt).isAfter(moment(b.createdAt)) ? 1 : -1;
+  });
 
   return (
     <Box>
-      {messages.map((message) => {
-        const time = moment(message.createdAt).format("h:mm");
-
+      {sortedMessages.map((message) => {
+        const time = moment(message.createdAt).format("h:mm a");
         return message.senderId === userId ? (
           <SenderBubble key={message.id} text={message.text} time={time} />
         ) : (
-          <OtherUserBubble key={message.id} text={message.text} time={time} otherUser={otherUser} />
+          <OtherUserBubble
+            key={message.id}
+            text={message.text}
+            time={time}
+            otherUser={otherUser}
+          />
         );
       })}
     </Box>
