@@ -68,10 +68,13 @@ export const logout = (id) => async (dispatch) => {
 };
 
 // CONVERSATIONS THUNK CREATORS
-
 export const fetchConversations = () => async (dispatch) => {
   try {
     const { data } = await axios.get("/api/conversations");
+    // Sort all fetched conversations' message(s) in ascending order by `createdAt` date before dispatching to component
+    data.forEach((conversation) => {
+      return conversation.messages.sort((a, b) => a.createdAt > b.createdAt);
+    });
     dispatch(gotConversations(data));
   } catch (error) {
     console.error(error);
