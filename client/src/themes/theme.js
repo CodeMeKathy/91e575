@@ -15,10 +15,17 @@ export const theme = createMuiTheme({
       input: {
         fontWeight: "bold"
       }
+    },
+    MuiInputLabel: {
+      root: {
+        "&$focused": {
+          color: "#B0B0B0"
+        }
+      }
     }
   },
   palette: {
-    primary: { main: "#3A8DFF" },
-    secondary: { main: "#B0B0B0" }
+    primary: { main: "#3A8DFF", contrastText: "#FFFFFF" },
+    secondary: { main: "#B0B0B0", light: "#D5DFEE" }
   }
 });
