@@ -35,6 +35,13 @@ const useStyles = makeStyles((theme) => ({
     overflow: "hidden",
     clip: "rect(1px 1px 1px 1px)"
   },
+  imagePreview: {
+    display: "grid",
+    placeItems: "center",
+    justifyContent: "flex-end",
+    gridAutoRows: "180px",
+    gridTemplateColumns: "repeat(auto-fit, minmax(40px, 1fr))"
+  },
   input: {
     height: 70,
     marginBottom: 20,
@@ -140,6 +147,22 @@ const Input = (props) => {
         </Box>
       ) : null}
       <FormControl fullWidth hiddenLabel>
+        {/* Image(s) Upload Preview */}
+        {selectedImages.length > 0 && (
+          <div className={classes.imagePreview}>
+            {selectedImages?.map((imageUploadURL, index) => (
+              <img
+                key={`${imageUploadURL}.${index}`}
+                src={URL.createObjectURL(imageUploadURL)}
+                style={{
+                  width: "80px",
+                  height: "80px",
+                  borderRadius: "10px"
+                }}
+              />
+            ))}
+          </div>
+        )}
         <label htmlFor="text" className={classes.hiddenLabel}>
           Chat Input Hidden Label
         </label>
