@@ -1,10 +1,17 @@
 import React, { useState } from "react";
-import { FormControl, FilledInput } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import { postMessage } from "../../store/utils/thunkCreators";
+import {
+  makeStyles,
+  FormControl,
+  FilledInput,
+  InputAdornment,
+  Tooltip,
+} from "@material-ui/core";
 
-const useStyles = makeStyles(() => ({
+import FileCopyRoundedIcon from "@material-ui/icons/FileCopyRounded";
+import SentimentSatisfiedSharpIcon from "@material-ui/icons/SentimentSatisfiedSharp";
+const useStyles = makeStyles((theme) => ({
   root: {
     justifySelf: "flex-end",
     marginTop: 15
@@ -14,6 +21,9 @@ const useStyles = makeStyles(() => ({
     backgroundColor: "#F4F6FA",
     borderRadius: 8,
     marginBottom: 20
+  inputIcon: {
+    margin: theme.spacing(1),
+    color: "#D1D9E6"
   }
 }));
 
@@ -49,7 +59,16 @@ const Input = (props) => {
           value={text}
           name="text"
           onChange={handleChange}
+          endAdornment={
+            <Tooltip title="Upload Image" aria-label="Upload Image">
+              <InputAdornment position="end">
         />
+                  <SentimentSatisfiedSharpIcon className={classes.inputIcon} />
+                  <FileCopyRoundedIcon className={classes.inputIcon} />
+              </InputAdornment>
+            </Tooltip>
+          }
+        ></FilledInput>
       </FormControl>
     </form>
   );
