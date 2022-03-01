@@ -4,12 +4,13 @@ const useStyles = makeStyles((theme) => ({
   panelContainer: {
     display: "flex",
     flexDirection: "column",
-    width: "45vw",
+    placeContent: "center",
+    width: "425px",
     height: "100%",
     position: "relative",
     zIndex: "0",
-    backgroundImage: "url(../assets/bg-img.png)",
-    backgroundSize: "cover",
+    background: "url(../assets/bg-img.png) no-repeat center center",
+    backgroundSize: "425px 100vh",
     "&:before": {
       display: "block",
       height: "100%",
@@ -33,22 +34,23 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     alignItems: "center"
   },
+  panelIcon: {
+    height: "66px",
+    width: "67px",
+    marginBottom: "1.875rem",
+    zIndex: "2",
+    borderRadius: "0px"
+  },
   panelTitle: {
     width: "300px",
     marginBottom: "5rem",
     zIndex: "1",
     textAlign: "center",
     fontSize: "28px",
+    fontWeight: "400",
     fontFamily: theme.typography.fontFamily,
+    lineHeight: "40px",
     color: theme.palette.primary.contrastText
-  },
-  panelIcon: {
-    height: "66px",
-    width: "67px",
-    left: "101.671875px",
-    top: "0.5px",
-    zIndex: "2",
-    borderRadius: "0px"
   }
 }));
 
