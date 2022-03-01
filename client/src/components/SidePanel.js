@@ -1,4 +1,3 @@
-import React from "react";
 import { Box, makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
@@ -57,7 +56,6 @@ const SidePanel = () => {
   const classes = useStyles();
 
   return (
-    <React.Fragment>
       <Box className={classes.panelContainer}>
         <div className={classes.panelHeader}>
           <img
@@ -70,7 +68,6 @@ const SidePanel = () => {
           </h1>
         </div>
       </Box>
-    </React.Fragment>
   );
 };
 export default SidePanel;
