@@ -168,7 +168,7 @@ const Input = (props) => {
           <Box className={classes.imagePreview}>
             {selectedImages?.map((imageUploadURL, index) => (
               <img
-                alt='Image Preview'
+                alt='Image Upload Preview'
                 key={`${imageUploadURL}.${index}`}
                 src={URL.createObjectURL(imageUploadURL)}
                 style={{
