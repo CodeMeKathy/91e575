@@ -149,19 +149,18 @@ const Input = (props) => {
       <FormControl fullWidth hiddenLabel>
         {/* Image(s) Upload Preview */}
         {selectedImages.length > 0 && (
-          <div className={classes.imagePreview}>
+          <Box className={classes.imagePreview}>
             {selectedImages?.map((imageUploadURL, index) => (
               <img
                 key={`${imageUploadURL}.${index}`}
                 src={URL.createObjectURL(imageUploadURL)}
                 style={{
-                  width: "80px",
                   height: "80px",
                   borderRadius: "10px"
                 }}
               />
             ))}
-          </div>
+          </Box>
         )}
         <label htmlFor="text" className={classes.hiddenLabel}>
           Chat Input Hidden Label
