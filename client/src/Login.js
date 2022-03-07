@@ -161,9 +161,9 @@ const Login = (props) => {
                 <FormControl margin="normal" required fullWidth>
                   <TextField
                     className={classes.loginInput}
-                    aria-label="E-mail address"
-                    label="E-mail address"
-                    name="email"
+                    aria-label="Username"
+                    label="Username"
+                    name="username"
                     type="text"
                   />
                 </FormControl>
