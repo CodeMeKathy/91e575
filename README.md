@@ -6,6 +6,14 @@ A one-to-one realtime chat app.
 
 ## Initial Setup
 
+Add a `.env` file in the `client` directory.  Add Cloudinary cloud name and unsigned upload preset name once created.  If needed, please see the [Cloudinary documentation](https://cloudinary.com/documentation/upload_presets#creating_and_managing_upload_presets) for more guidance on creating an unsigned upload preset.
+
+```code
+REACT_APP_UPLOAD_PRESET="<add upload preset name>"
+REACT_APP_CLOUD_NAME="<add cloud name>"
+```
+
+
 Create the PostgreSQL database (these instructions may need to be adapted for your operating system):
 
 ```
