@@ -13,6 +13,7 @@ import {
 
 import FileCopyRoundedIcon from "@material-ui/icons/FileCopyRounded";
 import SentimentSatisfiedSharpIcon from "@material-ui/icons/SentimentSatisfiedSharp";
+import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -87,8 +88,9 @@ const Input = (props) => {
   const [errorMsg, setErrorMsg] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const [text, setText] = useState("");
-  const [imageURLs, setImageURLs] = useState([]);
   const [selectedImages, setSelectedImages] = useState([]);
+
+  const axiosInstance = axios.create();
 
   const { postMessage, otherUser, conversationId, user } = props;
 
@@ -96,35 +98,10 @@ const Input = (props) => {
     event?.preventDefault();
     const images = Object.values(event.target.files);
     setSelectedImages(images);
-    handleImageUpload(images);
   };
 
-  const handleImageUpload = (images) => {
-    const tempImagesURLArray = [];
-    images.forEach(async (imageFile) => {
-      try {
-        setIsLoading(true);
-        const formData = new FormData();
-        formData.append("file", imageFile);
-        formData.append("upload_preset", "cswc2hml");
-        const response = await fetch(
-          "https://api.cloudinary.com/v1_1/dhfi6rbcq/image/upload",
-          {
-            method: "POST",
-            body: formData
-          }
-        );
-
-        const responseData = await response.json();
-        tempImagesURLArray.push(responseData.secure_url);
-      } catch (error) {
-        setErrorMsg(error.message);
-        console.log("Cloudinary image upload error, URL not received.", error);
-      } finally {
-        setImageURLs([...new Set(tempImagesURLArray)]);
-        setIsLoading(false);
-      }
-    });
+  const axiosPost = async (url, data) => {
+    return axiosInstance.post(url, data);
   };
 
   const handleChange = (event) => {
@@ -134,6 +111,38 @@ const Input = (props) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     // add sender user info if posting to a brand new convo, so that the other user will have access to username, profile pic, etc.
+
+    const cloudName = process.env.REACT_APP_CLOUD_NAME;
+    const cloudinaryURL = `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`;
+    const uploadPreset = process.env.REACT_APP_UPLOAD_PRESET;
+    const imageUploadRequests = [];
+    let imageURLs = [];
+
+    setIsLoading(true);
+    // Create a formData object for each user selected image
+    selectedImages.forEach(async (imageFile) => {
+      const formData = new FormData();
+      formData.append("file", imageFile);
+      formData.append("upload_preset", `${uploadPreset}`);
+      imageUploadRequests.push(axiosPost(cloudinaryURL, formData));
+    });
+    try {
+      const imageUploadResponses = await Promise.allSettled(
+        imageUploadRequests
+      );
+      imageURLs = imageUploadResponses.map(
+        ({
+          value: {
+            data: { secure_url }
+          }
+        }) => secure_url
+      );
+    } catch (error) {
+      setErrorMsg(error.message);
+      console.log("Cloudinary image upload error. ", error.message);
+    } finally {
+      setIsLoading(false);
+    }
     const reqBody = {
       text: event.target.text.value,
       recipientId: otherUser.id,
@@ -142,9 +151,8 @@ const Input = (props) => {
       sender: conversationId ? null : user
     };
     await postMessage(reqBody);
-    setText("");
-    setImageURLs([]);
     setSelectedImages([]);
+    setText("");
   };
 
   return (
