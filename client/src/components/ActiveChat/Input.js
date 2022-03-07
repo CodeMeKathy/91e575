@@ -7,7 +7,8 @@ import {
   FilledInput,
   InputAdornment,
   Tooltip,
-  Box
+  Box,
+  LinearProgress
 } from "@material-ui/core";
 
 import FileCopyRoundedIcon from "@material-ui/icons/FileCopyRounded";
@@ -41,6 +42,13 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "flex-end",
     gridAutoRows: "180px",
     gridTemplateColumns: "repeat(auto-fit, minmax(40px, 1fr))"
+  },
+  loadingProgressDiv: {
+    width: "100%"
+  },
+
+  loadingProgressHidden: {
+    display: "none"
   },
   input: {
     height: 70,
@@ -162,6 +170,15 @@ const Input = (props) => {
             ))}
           </Box>
         )}
+        <Box
+          className={
+            isLoading
+              ? classes.loadingProgressDiv
+              : classes.loadingProgressHidden
+          }
+        >
+          <LinearProgress />
+        </Box>
         <label htmlFor="text" className={classes.hiddenLabel}>
           Chat Input Hidden Label
         </label>
@@ -174,6 +191,7 @@ const Input = (props) => {
           id="text"
           aria-label="text"
           onChange={handleChange}
+          disabled={isLoading}
           endAdornment={
             <Tooltip title="Upload Image" aria-label="Upload Image">
               <InputAdornment position="end">
