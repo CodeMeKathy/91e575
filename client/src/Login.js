@@ -1,17 +1,17 @@
 import React from "react";
 import { Redirect, useHistory } from "react-router-dom";
 import { connect } from "react-redux";
-import {
-  Grid,
-  Box,
-  Typography,
-  Button,
-  FormControl,
-  TextField,
-  InputAdornment,
-  makeStyles
-} from "@material-ui/core";
+import { Grid, Box, InputAdornment } from "@material-ui/core";
 import { login } from "./store/utils/thunkCreators";
+import useAuthLayout from "./themes/authLayout";
+
+import {
+  SidePanel,
+  FormHeader,
+  CTAHeader,
+  CTAButton,
+  FormInput
+} from "./components/index";
 
 import { SidePanel } from "./components/index";
 
@@ -121,7 +121,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Login = (props) => {
-  const classes = useStyles();
+  const authLayout = useAuthLayout();
   const history = useHistory();
   const { user, login } = props;
 
@@ -138,67 +138,47 @@ const Login = (props) => {
   }
 
   return (
-    <Grid className={classes.loginContainer} container justify="center">
+    <Grid className={authLayout.authContainer} container justify="center">
       <SidePanel />
-      <Box className={classes.loginBox}>
-        <Grid container item className={classes.loginSignUpGrid}>
-          <Typography>Dont' have an account?</Typography>
-          <Button
-            onClick={() => history.push("/register")}
-            className={classes.loginSignUpBtn}
-            size="large"
-          >
-            Create account
-          </Button>
-        </Grid>
-        <Grid container item className={classes.loginGrid}>
-          <form onSubmit={handleLogin} className={classes.loginForm}>
-            <Grid>
-              <Typography className={classes.loginHeader}>
-                Welcome back!
-              </Typography>
-              <Grid>
-                <FormControl margin="normal" required fullWidth>
-                  <TextField
-                    className={classes.loginInput}
-                    aria-label="Username"
-                    label="Username"
-                    name="username"
-                    type="text"
-                  />
-                </FormControl>
-              </Grid>
-              <FormControl margin="normal" required fullWidth>
-                <TextField
-                  className={classes.loginInput}
-                  label="Password"
-                  aria-label="password"
-                  type="password"
-                  name="password"
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <a
-                          href="#"
-                          target="_blank"
-                          // TODO: Update link to reset password once process confirmed
-                        >
-                          Forget?
-                        </a>
-                      </InputAdornment>
-                    )
-                  }}
-                />
-              </FormControl>
-            </Grid>
-            <Button
-              type="submit"
-              variant="contained"
-              size="large"
-              className={classes.loginBtn}
-            >
-              Login
-            </Button>
+      <Box className={authLayout.authBox}>
+        <CTAHeader
+          ctaHeader="Don't have an account?"
+          ctaButtonText="Create account"
+          onClick={() => history.push("/register")}
+          width="170px"
+          mobileWidth="145px"
+        />
+        <Grid container item className={authLayout.authGrid}>
+          <form onSubmit={handleLogin} className={authLayout.authForm}>
+            <FormHeader formHeader="Welcome back!" />
+            <FormInput
+              aria-label="Username"
+              label="Username"
+              name="username"
+              type="text"
+              required
+            />
+            <FormInput
+              label="Password"
+              aria-label="password"
+              type="password"
+              name="password"
+              required
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <a
+                      href="#"
+                      target="_blank"
+                      // Backlog ->TODO: -> Update with the correct link to reset password once determined
+                    >
+                      Forget?
+                    </a>
+                  </InputAdornment>
+                )
+              }}
+            />
+            <CTAButton ctaButtonText="Login" type="submit" />
           </form>
         </Grid>
       </Box>

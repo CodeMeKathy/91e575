@@ -5,3 +5,7 @@ export { default as MultiImageTextBubble } from "./ActiveChat/MultiImageTextBubb
 export { default as ImagesBubble } from "./ActiveChat/ImagesBubble";
 export { default as ImageTextBubble } from "./ActiveChat/ImageTextBubble";
 export { default as TextBubble } from "./ActiveChat/TextBubble";
+export { default as CTAHeader } from "./CTAHeader";
+export { default as CTAButton } from "./CTAButton";
+export { default as FormInput } from "./FormInput";
+export { default as FormHeader } from "./FormHeader";

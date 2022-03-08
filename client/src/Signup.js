@@ -1,17 +1,17 @@
 import React, { useState } from "react";
 import { Redirect, useHistory } from "react-router-dom";
 import { connect } from "react-redux";
-import {
-  Grid,
-  Box,
-  Typography,
-  Button,
-  FormControl,
-  TextField,
-  FormHelperText,
-  makeStyles
-} from "@material-ui/core";
+import { Grid, Box } from "@material-ui/core";
 import { register } from "./store/utils/thunkCreators";
+import useAuthLayout from "./themes/authLayout";
+
+import {
+  SidePanel,
+  FormHeader,
+  CTAHeader,
+  CTAButton,
+  FormInput
+} from "./components/index";
 
 import { SidePanel } from "./components/index";
 
@@ -121,7 +121,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 const Login = (props) => {
-  const classes = useStyles();
+  const authLayout = useAuthLayout();
   const history = useHistory();
   const { user, register } = props;
   const [formErrorMessage, setFormErrorMessage] = useState({});
@@ -146,95 +146,54 @@ const Login = (props) => {
   }
 
   return (
-    <Grid className={classes.signUpContainer} container justify="center">
+    <Grid className={authLayout.authContainer} container justify="center">
       <SidePanel />
-      <Box className={classes.signUpBox}>
-        <Grid container item className={classes.signUpLoginGrid}>
-          <Typography>Already have an account?</Typography>
-          <Button
-            onClick={() => history.push("/login")}
-            className={classes.signUpLoginBtn}
-          >
-            Login
-          </Button>
-        </Grid>
-        <Grid container item className={classes.signUpGrid}>
-          <form onSubmit={handleRegister} className={classes.signUpForm}>
-            <Grid>
-              <Typography className={classes.signUpHeader}>
-                Create an account.
-              </Typography>
-              <Grid>
-                <FormControl fullWidth>
-                  <TextField
-                    className={classes.signUpInput}
-                    aria-label="username"
-                    label="Username"
-                    name="username"
-                    type="text"
-                    required
-                  />
-                </FormControl>
-              </Grid>
-              <Grid>
-                <FormControl fullWidth>
-                  <TextField
-                    className={classes.signUpInput}
-                    label="E-mail address"
-                    aria-label="e-mail address"
-                    type="email"
-                    name="email"
-                    required
-                  />
-                </FormControl>
-              </Grid>
-              <Grid>
-                <FormControl
-                  fullWidth
-                  error={!!formErrorMessage.confirmPassword}
-                >
-                  <TextField
-                    className={classes.signUpInput}
-                    aria-label="password"
-                    label="Password"
-                    type="password"
-                    inputProps={{ minLength: 6 }}
-                    name="password"
-                    required
-                  />
-                  <FormHelperText>
-                    {formErrorMessage.confirmPassword}
-                  </FormHelperText>
-                </FormControl>
-              </Grid>
-              <Grid>
-                <FormControl
-                  fullWidth
-                  error={!!formErrorMessage.confirmPassword}
-                >
-                  <TextField
-                    className={classes.signUpInput}
-                    label="Confirm Password"
-                    aria-label="confirm password"
-                    type="password"
-                    inputProps={{ minLength: 6 }}
-                    name="confirmPassword"
-                    required
-                  />
-                  <FormHelperText>
-                    {formErrorMessage.confirmPassword}
-                  </FormHelperText>
-                </FormControl>
-              </Grid>
-            </Grid>
-            <Button
-              className={classes.signUpBtn}
-              type="submit"
-              variant="contained"
-              size="large"
-            >
-              Create
-            </Button>
+      <Box className={authLayout.authBox}>
+        <CTAHeader
+          ctaHeader="Already have an account?"
+          ctaButtonText="Login"
+          onClick={() => history.push("/login")}
+          width="140px"
+          mobileWidth="120px"
+        />
+        <Grid container item className={authLayout.authGrid}>
+          <form onSubmit={handleRegister} className={authLayout.authForm}>
+            <FormHeader formHeader="Create an account." />
+            <FormInput
+              aria-label="Username"
+              label="Username"
+              name="username"
+              type="text"
+              required
+            />
+            <FormInput
+              aria-label="E-mail address"
+              label="E-mail address"
+              name="email"
+              type="email"
+              required
+            />
+            <FormInput
+              aria-label="Password"
+              label="Password"
+              type="password"
+              inputProps={{ minLength: 6 }}
+              name="password"
+              error={!!formErrorMessage.confirmPassword}
+              formHelperText={formErrorMessage.confirmPassword}
+              required
+            />
+            <FormInput
+              label="Confirm Password"
+              aria-label="Confirm Password"
+              type="password"
+              inputProps={{ minLength: 6 }}
+              name="confirmPassword"
+              error={!!formErrorMessage.confirmPassword}
+              formHelperText={formErrorMessage.confirmPassword}
+              required
+            />
+            <CTAButton ctaButtonText="Create" type="submit" />
           </form>
         </Grid>
       </Box>
