@@ -68,6 +68,7 @@ export const logout = (id) => async (dispatch) => {
 };
 
 // CONVERSATIONS THUNK CREATORS
+
 export const fetchConversations = () => async (dispatch) => {
   try {
     const { data } = await axios.get("/api/conversations");
