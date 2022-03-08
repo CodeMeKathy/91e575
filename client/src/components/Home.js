@@ -10,7 +10,7 @@ import { clearOnLogout } from "../store/index";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    height: "100vh"
+    height: "95vh"
   }
 }));
 

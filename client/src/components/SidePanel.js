@@ -58,18 +58,18 @@ const SidePanel = () => {
   const classes = useStyles();
 
   return (
-      <Box className={classes.panelContainer}>
-        <div className={classes.panelHeader}>
-          <img
-            srcSet="assets/bubble.svg"
-            alt="Message Bubble Icon"
-            className={classes.panelIcon}
-          />
-          <h1 className={classes.panelTitle}>
-            Converse with anyone with any language
-          </h1>
-        </div>
-      </Box>
+    <Box className={classes.panelContainer}>
+      <div className={classes.panelHeader}>
+        <img
+          srcSet="assets/bubble.svg"
+          alt="Message Bubble Icon"
+          className={classes.panelIcon}
+        />
+        <h1 className={classes.panelTitle}>
+          Converse with anyone with any language
+        </h1>
+      </div>
+    </Box>
   );
 };
 export default SidePanel;

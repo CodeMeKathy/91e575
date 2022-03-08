@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 const useStyles = makeStyles(() => ({
   root: {
     display: "flex",
-    flexGrow: 8,
+    width: "60%",
     flexDirection: "column"
   },
   chatContainer: {
@@ -38,6 +38,7 @@ const ActiveChat = (props) => {
               messages={conversation.messages}
               otherUser={conversation.otherUser}
               userId={user.id}
+              user={user}
             />
             <Input
               otherUser={conversation.otherUser}

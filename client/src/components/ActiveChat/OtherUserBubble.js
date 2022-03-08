@@ -1,51 +1,62 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import { Box, Typography, Avatar } from "@material-ui/core";
+import { Box } from "@material-ui/core";
 
-const useStyles = makeStyles(() => ({
-  root: {
-    display: "flex"
-  },
-  avatar: {
-    height: 30,
-    width: 30,
-    marginRight: 11,
-    marginTop: 6
-  },
-  usernameDate: {
-    fontSize: 11,
-    color: "#BECCE2",
-    fontWeight: "bold",
-    marginBottom: 5
-  },
-  bubble: {
-    backgroundImage: "linear-gradient(225deg, #6CC1FF 0%, #3A8DFF 100%)",
-    borderRadius: "0 10px 10px 10px"
-  },
-  text: {
-    fontSize: 14,
-    fontWeight: "bold",
-    color: "#FFFFFF",
-    letterSpacing: -0.2,
-    padding: 8
-  }
-}));
+import {
+  ImagesBubble,
+  TextBubble,
+  ImageTextBubble,
+  MultiImageTextBubble,
+} from "../index";
+import useBubbleTheme from "../../themes/bubbleTheme";
 
 const OtherUserBubble = (props) => {
-  const classes = useStyles();
-  const { text, time, otherUser } = props;
+  const bubbleTheme = useBubbleTheme();
+  const { text, time, otherUser, imageURLs } = props;
   return (
-    <Box className={classes.root}>
-      <Avatar alt={otherUser.username} src={otherUser.photoUrl} className={classes.avatar}></Avatar>
-      <Box>
-        <Typography className={classes.usernameDate}>
-          {otherUser.username} {time}
-        </Typography>
-        <Box className={classes.bubble}>
-          <Typography className={classes.text}>{text}</Typography>
-        </Box>
+    <>
+      <Box className={bubbleTheme.root}>
+        {/* Text Only */}
+        {text && !imageURLs?.length && (
+          <TextBubble otherUser={otherUser} time={time} text={text} />
+        )}
+
+        {/* Image(s) Only */}
+        {imageURLs?.length && !text ? (
+          <ImagesBubble
+            otherUser={otherUser}
+            time={time}
+            text={text}
+            imageURLs={imageURLs}
+          />
+        ) : (
+          <></>
+        )}
+
+        {/* Single Image && Text */}
+        {imageURLs?.length === 1 && text ? (
+          <ImageTextBubble
+            time={time}
+            text={text}
+            imageURLs={imageURLs}
+            otherUser={otherUser}
+          />
+        ) : (
+          <></>
+        )}
+
+        {/* Multi Image && Text */}
+        {imageURLs?.length > 1 && text ? (
+          <MultiImageTextBubble
+            time={time}
+            text={text}
+            imageURLs={imageURLs}
+            otherUser={otherUser}
+          />
+        ) : (
+          <></>
+        )}
       </Box>
-    </Box>
+    </>
   );
 };
 

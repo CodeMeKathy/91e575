@@ -6,9 +6,9 @@ import { Search, Chat, CurrentUser } from "./index.js";
 
 const useStyles = makeStyles(() => ({
   root: {
+    width: "40%",
     paddingLeft: 21,
     paddingRight: 21,
-    flexGrow: 1
   },
   title: {
     fontSize: 20,
